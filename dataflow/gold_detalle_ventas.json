@@ -1,0 +1,75 @@
+{
+	"name": "gold_detalle_ventas",
+	"properties": {
+		"folder": {
+			"name": "GOLD"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "silver_detalle_ventas",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "gold_detalle_ventas",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          sls_ord_num as string,",
+				"          sls_prd_key as string,",
+				"          sls_cust_id as integer,",
+				"          ID as string,",
+				"          CID as string,",
+				"          GEN as string,",
+				"          sls_order_dt as integer,",
+				"          sls_ship_dt as integer,",
+				"          sls_sales as integer,",
+				"          sls_quantity as integer,",
+				"          sls_price as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT\\n  dv.sls_ord_num,\\n  dv.sls_prd_key,\\n  dv.sls_cust_id,\\n  pcm.ID,                             \\n  cl.CID,                            \\n  cbg.GEN,                         \\n  dv.sls_order_dt,\\n  dv.sls_ship_dt,\\n  dv.sls_sales,\\n  dv.sls_quantity,\\n  dv.sls_price\\nFROM SILVER.DETALLE_VENTAS dv\\nLEFT JOIN SILVER.PRODUCTOS p ON dv.sls_prd_key = p.prd_key\\nLEFT JOIN SILVER.PRODUCTOS_CAT_MANT pcm ON p.prd_line = pcm.CAT\\nLEFT JOIN SILVER.CLIENTES c ON dv.sls_cust_id = c.cst_id\\nLEFT JOIN SILVER.CLIENTESLOCATION cl ON CAST(c.cst_id AS VARCHAR(50)) = cl.CID\\nLEFT JOIN SILVER.CLIENTES_BD_GEN cbg ON cl.CID = cbg.CID',",
+				"     format: 'query') ~> source1",
+				"source1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          sls_ord_num as string,",
+				"          cst_id as integer,",
+				"          prd_id as integer,",
+				"          ID as string,",
+				"          CID as string,",
+				"          GEN as string,",
+				"          sls_order_dt as integer,",
+				"          sls_ship_dt as integer,",
+				"          sls_sales as integer,",
+				"          sls_quantity as integer,",
+				"          sls_price as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'allErrors',",
+				"     transactionCommit: 'single',",
+				"     reportSuccessOnError: true) ~> sink1"
+			]
+		}
+	}
+}

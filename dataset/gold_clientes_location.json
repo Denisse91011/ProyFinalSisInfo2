@@ -1,0 +1,28 @@
+{
+	"name": "gold_clientes_location",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_dw_producto_clientes",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "GOLD"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "CID",
+				"type": "varchar"
+			},
+			{
+				"name": "CNTRY",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "GOLD",
+			"table": "DIM_CLIENTESLOCATION"
+		}
+	}
+}
