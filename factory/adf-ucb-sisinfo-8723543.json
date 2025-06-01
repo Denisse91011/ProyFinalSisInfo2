@@ -1,0 +1,9 @@
+{
+	"name": "adf-ucb-sisinfo-8723543",
+	"location": "brazilsouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "bf2975df-25e1-4809-b5a5-0f6f0152a41c",
+		"tenantId": "cc28633f-12b8-46cb-bc15-951dae239b4d"
+	}
+}
