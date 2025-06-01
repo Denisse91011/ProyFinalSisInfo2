@@ -2,7 +2,7 @@
 	"name": "bronze_sql_productos_cat_mant",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "sql_dw_producto_clientes",
+			"referenceName": "sql_dw_producto_cliente",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {

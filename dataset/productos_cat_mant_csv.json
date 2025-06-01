@@ -2,7 +2,7 @@
 	"name": "productos_cat_mant_csv",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "sa_producto_cliente",
+			"referenceName": "datalake_conn",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
@@ -14,7 +14,8 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "Productos_CAT_MANT.csv",
-				"container": "productocliente"
+				"folderPath": "productos_CAT_MANT",
+				"container": "bronze"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
