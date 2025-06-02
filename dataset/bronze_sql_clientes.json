@@ -16,7 +16,7 @@
 				"type": "varchar"
 			},
 			{
-				"name": "key",
+				"name": "clikey",
 				"type": "varchar"
 			},
 			{
