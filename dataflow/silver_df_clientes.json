@@ -1,5 +1,5 @@
 {
-	"name": "silver_df_productos",
+	"name": "silver_df_clientes",
 	"properties": {
 		"folder": {
 			"name": "SILVER"
@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "bronze_sql_productos",
+						"referenceName": "bronze_sql_clientes",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
@@ -18,7 +18,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "silver_productos",
+						"referenceName": "silver_clientes",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -31,45 +31,48 @@
 			],
 			"scriptLines": [
 				"source(output(",
-				"          idproduct as string,",
-				"          productkey as string,",
-				"          productname as string,",
-				"          productcost as string,",
-				"          productline as string",
+				"          id as string,",
+				"          clikey as string,",
+				"          firstname as string,",
+				"          lastname as string,",
+				"          marital_status as string,",
+				"          gender as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'SELECT idproduct, productkey,productname,productcost,productline FROM BRONZE.PRODUCTOS',",
+				"     query: 'SELECT id, clikey, firstname, lastname, marital_status, gender FROM BRONZE.CLIENTES',",
 				"     format: 'query') ~> source1",
 				"source1 cast(output(",
-				"          idproduct as integer,",
-				"          productcost as integer",
+				"          id as integer",
 				"     ),",
 				"     errors: true) ~> cast1",
 				"cast1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          idproduct as integer,",
-				"          productkey as string,",
-				"          productname as string,",
-				"          productcost as integer,",
-				"          productline as string",
+				"          id as integer,",
+				"          clikey as string,",
+				"          firstname as string,",
+				"          lastname as string,",
+				"          marital_status as string,",
+				"          gender as string",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
 				"     updateable:false,",
 				"     upsertable:false,",
+				"     truncate:true,",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          idproduct,",
-				"          productkey,",
-				"          productname,",
-				"          productcost,",
-				"          productline",
+				"          id,",
+				"          clikey,",
+				"          firstname,",
+				"          lastname,",
+				"          marital_status,",
+				"          gender",
 				"     )) ~> sink1"
 			]
 		}

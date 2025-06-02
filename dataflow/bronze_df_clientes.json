@@ -41,7 +41,7 @@
 				"     validateSchema: false,",
 				"     input(",
 				"          id as string,",
-				"          key as string,",
+				"          clikey as string,",
 				"          firstname as string,",
 				"          lastname as string,",
 				"          marital_status as string,",

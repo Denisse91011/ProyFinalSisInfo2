@@ -8,6 +8,10 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "bronze_sql_productos_cat_mant",
+						"type": "DatasetReference"
+					},
 					"name": "source1"
 				}
 			],
@@ -20,25 +24,20 @@
 					"name": "sink1"
 				}
 			],
-			"transformations": [
-				{
-					"name": "cast1"
-				}
-			],
+			"transformations": [],
 			"scriptLines": [
 				"source(output(",
-				"          ID as string,",
-				"          CAT as string,",
-				"          SUBCAT as string,",
-				"          MAINTENANCE as string",
+				"          producto_id as string,",
+				"          categoria as string,",
+				"          subcategoria as string,",
+				"          mantenimiento as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1",
-				"source1 cast(output(",
-				"          ID as string",
-				"     ),",
-				"     errors: true) ~> cast1",
-				"cast1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT producto_id, categoria, subcategoria, mantenimiento FROM BRONZE.PRODUCTOS_CAT_MANT',",
+				"     format: 'query') ~> source1",
+				"source1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          id as string,",
@@ -57,10 +56,10 @@
 				"     transactionCommit: 'single',",
 				"     reportSuccessOnError: true,",
 				"     mapColumn(",
-				"          ID,",
-				"          CAT,",
-				"          SUBCAT,",
-				"          MAINTENANCE",
+				"          id = producto_id,",
+				"          cat = categoria,",
+				"          subcat = subcategoria,",
+				"          maintenance = mantenimiento",
 				"     )) ~> sink1"
 			]
 		}

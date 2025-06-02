@@ -8,6 +8,10 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "bronze_clientes_location",
+						"type": "DatasetReference"
+					},
 					"name": "source1"
 				}
 			],
@@ -27,13 +31,17 @@
 			],
 			"scriptLines": [
 				"source(output(",
-				"          CID as string,",
-				"          CNTRY as string",
+				"          idcountry as string,",
+				"          country as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT idcountry, country FROM BRONZE.CLIENTES_LOCATION',",
+				"     format: 'query') ~> source1",
 				"source1 cast(output(",
-				"          CID as string",
+				"          idcountry as string,",
+				"          country as string",
 				"     ),",
 				"     errors: true) ~> cast1",
 				"cast1 sink(allowSchemaDrift: true,",
@@ -53,8 +61,8 @@
 				"     transactionCommit: 'single',",
 				"     reportSuccessOnError: true,",
 				"     mapColumn(",
-				"          CID,",
-				"          CNTRY",
+				"          idcountry,",
+				"          country",
 				"     )) ~> sink1"
 			]
 		}
