@@ -1,5 +1,5 @@
 {
-	"name": "gold_pipeline_clientes",
+	"name": "gold_pipeline_dim_cliente",
 	"properties": {
 		"activities": [
 			{
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "gold_df_clientes",
+						"referenceName": "gold_df_dim_cliente",
 						"type": "DataFlowReference"
 					},
 					"compute": {

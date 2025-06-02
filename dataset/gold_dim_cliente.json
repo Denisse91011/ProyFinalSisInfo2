@@ -1,0 +1,53 @@
+{
+	"name": "gold_dim_cliente",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_dw_producto_cliente",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "GOLD"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "idCliente",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "clikey",
+				"type": "varchar"
+			},
+			{
+				"name": "firstname",
+				"type": "varchar"
+			},
+			{
+				"name": "lastname",
+				"type": "varchar"
+			},
+			{
+				"name": "marital_status",
+				"type": "varchar"
+			},
+			{
+				"name": "gender",
+				"type": "varchar"
+			},
+			{
+				"name": "fechaNac",
+				"type": "date"
+			},
+			{
+				"name": "country",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "GOLD",
+			"table": "DIM_CLIENTES"
+		}
+	}
+}

@@ -1,5 +1,5 @@
 {
-	"name": "gold_df_clientes",
+	"name": "gold_df_dim_cliente",
 	"properties": {
 		"folder": {
 			"name": "GOLD"
@@ -13,53 +13,139 @@
 						"type": "DatasetReference"
 					},
 					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "silver_clientes_bd_gen",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				},
+				{
+					"dataset": {
+						"referenceName": "silver_clientes_location",
+						"type": "DatasetReference"
+					},
+					"name": "source3"
 				}
 			],
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "gold_clientes",
+						"referenceName": "gold_dim_cliente",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
 				}
 			],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "join1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "cast1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "cast2"
+				},
+				{
+					"name": "join2"
+				},
+				{
+					"name": "aggregate1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
-				"          cst_id as integer,",
-				"          cst_key as string,",
-				"          cst_firstname as string,",
-				"          cst_lastname as string,",
-				"          cst_marital_status as string,",
-				"          cst_gndr as string",
+				"          id as integer,",
+				"          clikey as string,",
+				"          firstname as string,",
+				"          lastname as string,",
+				"          marital_status as string,",
+				"          gender as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'SELECT\\n  cst_id,\\n  cst_key,\\n  cst_firstname,\\n  cst_lastname,\\n  cst_marital_status,\\n  cst_gndr\\nFROM SILVER.CLIENTES',",
+				"     query: 'SELECT id, clikey,firstname,lastname,marital_status,gender FROM SILVER.CLIENTES',",
 				"     format: 'query') ~> source1",
-				"source1 sink(allowSchemaDrift: true,",
+				"source(output(",
+				"          cid as string,",
+				"          bdate as date,",
+				"          gen as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT cid, bdate, gen FROM SILVER.CLIENTES_BD_GEN',",
+				"     format: 'query') ~> source2",
+				"source(output(",
+				"          idcountry as string,",
+				"          country as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT idcountry, country FROM SILVER.CLIENTES_LOCATION\\n',",
+				"     format: 'query') ~> source3",
+				"source1, cast1 join(id == cid,",
+				"     joinType:'outer',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"source2 derive(cid = right(cid, 5)) ~> derivedColumn1",
+				"derivedColumn1 cast(output(",
+				"          cid as integer",
+				"     ),",
+				"     errors: true) ~> cast1",
+				"source3 derive(idcountry = right(idcountry, 5)) ~> derivedColumn2",
+				"derivedColumn2 cast(output(",
+				"          idcountry as integer",
+				"     ),",
+				"     errors: true) ~> cast2",
+				"join1, cast2 join(id == idcountry,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join2",
+				"join2 aggregate(groupBy(id),",
+				"     each(match(name !='id'), $$ = first($$))) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          cst_id as integer,",
-				"          cst_key as string,",
-				"          cst_firstname as string,",
-				"          cst_lastname as string,",
-				"          cst_marital_status as string,",
-				"          cst_gndr as string",
+				"          idCliente as integer,",
+				"          clikey as string,",
+				"          firstname as string,",
+				"          lastname as string,",
+				"          marital_status as string,",
+				"          gender as string,",
+				"          fechaNac as date,",
+				"          country as string",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
 				"     updateable:false,",
 				"     upsertable:false,",
-				"     truncate:true,",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'allErrors',",
-				"     transactionCommit: 'single',",
-				"     reportSuccessOnError: true) ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          idCliente = id,",
+				"          clikey,",
+				"          firstname,",
+				"          lastname,",
+				"          marital_status,",
+				"          gender = gen,",
+				"          fechaNac = bdate,",
+				"          country",
+				"     )) ~> sink1"
 			]
 		}
 	}

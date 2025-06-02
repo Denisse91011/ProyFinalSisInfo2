@@ -1,0 +1,48 @@
+{
+	"name": "gold_hechos_ordenes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_dw_producto_cliente",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "GOLD"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ordenNum",
+				"type": "varchar"
+			},
+			{
+				"name": "idCliente",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "idproduct",
+				"type": "varchar"
+			},
+			{
+				"name": "quantity",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "price",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "sales",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "GOLD",
+			"table": "HECHOS_ORDENES"
+		}
+	}
+}

@@ -1,5 +1,5 @@
 {
-	"name": "gold_df_clientes_location",
+	"name": "gold_df_dim_producto",
 	"properties": {
 		"folder": {
 			"name": "GOLD"
@@ -9,37 +9,94 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "silver_clientes_location",
+						"referenceName": "silver_productos",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "silver_productos_cat_mant",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
 				}
 			],
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "gold_clientes_location",
+						"referenceName": "gold_dim_producto",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
 				}
 			],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "cast1"
+				},
+				{
+					"name": "aggregate1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
-				"          CID as string,",
-				"          CNTRY as string",
+				"          idproduct as integer,",
+				"          productkey as string,",
+				"          productname as string,",
+				"          productcost as integer,",
+				"          productline as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'SELECT\\n  CID,\\n  CNTRY\\nFROM SILVER.CLIENTESLOCATION',",
+				"     query: 'SELECT idproduct, productkey,productname,productcost,productline FROM SILVER.PRODUCTOS\\n',",
 				"     format: 'query') ~> source1",
-				"source1 sink(allowSchemaDrift: true,",
+				"source(output(",
+				"          id as string,",
+				"          cat as string,",
+				"          subcat as string,",
+				"          maintenance as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT id, cat,subcat,maintenance FROM SILVER.PRODUCTOS_CAT_MANT',",
+				"     format: 'query') ~> source2",
+				"source1 derive(productkey = left(productkey,5),",
+				"          productcost = iif(isNull(productcost), 0, productcost)) ~> derivedColumn1",
+				"derivedColumn1, derivedColumn2 join(productkey == id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"source2 derive(id = replace(id, '_', '-')) ~> derivedColumn2",
+				"join1 cast(output(",
+				"          idproduct as string",
+				"     ),",
+				"     errors: true) ~> cast1",
+				"cast1 aggregate(groupBy(idproduct),",
+				"     each(match(name != 'idproduct'), $$ = first($$))) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          CID as string,",
-				"          CNTRY as string",
+				"          idproduct as string,",
+				"          productkey as string,",
+				"          nomProducto as string,",
+				"          costoProducto as integer,",
+				"          lineProducto as string,",
+				"          categoria as string,",
+				"          subcategoria as string,",
+				"          mantenimiento as string",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -48,9 +105,17 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'allErrors',",
-				"     transactionCommit: 'single',",
-				"     reportSuccessOnError: true) ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          idproduct,",
+				"          productkey,",
+				"          nomProducto = productname,",
+				"          costoProducto = productcost,",
+				"          lineProducto = productline,",
+				"          categoria = cat,",
+				"          subcategoria = subcat,",
+				"          mantenimiento = maintenance",
+				"     )) ~> sink1"
 			]
 		}
 	}
