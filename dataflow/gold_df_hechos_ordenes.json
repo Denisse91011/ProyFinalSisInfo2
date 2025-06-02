@@ -50,6 +50,13 @@
 				},
 				{
 					"name": "cast1"
+				},
+				{
+					"name": "aggregate1",
+					"description": "Agregación de datos por \"numorder\" que genera las columnas \"productkey, custid, orderdt, shipdt, sales, quantity, price, idproduct, id, firstname\""
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -101,7 +108,24 @@
 				"          idproduct as string",
 				"     ),",
 				"     errors: true) ~> cast1",
-				"join2 sink(allowSchemaDrift: true,",
+				"select1 aggregate(groupBy(numorder),",
+				"     each(match(name != 'numorder'), $$ = first($$))) ~> aggregate1",
+				"join2 select(mapColumn(",
+				"          numorder,",
+				"          productkey = source1@productkey,",
+				"          custid,",
+				"          orderdt,",
+				"          shipdt,",
+				"          sales,",
+				"          quantity,",
+				"          price,",
+				"          idproduct,",
+				"          id,",
+				"          firstname",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          ordenNum as string,",

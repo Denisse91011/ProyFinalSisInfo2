@@ -1,5 +1,5 @@
 {
-	"name": "gold_pipeline_productos",
+	"name": "gold_pipeline_dim_productos",
 	"properties": {
 		"activities": [
 			{

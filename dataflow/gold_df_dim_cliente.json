@@ -115,7 +115,7 @@
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join2",
 				"join2 aggregate(groupBy(id),",
-				"     each(match(name !='id'), $$ = first($$))) ~> aggregate1",
+				"     each(match(name != 'id'), $$ = first($$))) ~> aggregate1",
 				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
