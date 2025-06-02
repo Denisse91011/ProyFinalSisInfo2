@@ -8,19 +8,11 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"dataset": {
-						"referenceName": "bronze_sql_clientes_bd_gen",
-						"type": "DatasetReference"
-					},
 					"name": "source1"
 				}
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "silver_clientes_bd_gen",
-						"type": "DatasetReference"
-					},
 					"name": "sink1"
 				}
 			],
@@ -36,36 +28,21 @@
 				"          GEN as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'SELECT \\n  CID,\\n  BDATE,\\n  GEN\\n FROM BRONZE.CLIENTES_BD_GEN\\n',",
-				"     format: 'query') ~> source1",
+				"     validateSchema: false) ~> source1",
 				"source1 cast(output(",
 				"          BDATE as date 'yyyy-MM-dd'",
 				"     ),",
 				"     errors: true) ~> cast1",
 				"cast1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     input(",
-				"          CID as string,",
-				"          BDATE as date,",
-				"          GEN as string",
-				"     ),",
-				"     deletable:false,",
-				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:false,",
-				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'allErrors',",
-				"     transactionCommit: 'single',",
-				"     reportSuccessOnError: true,",
 				"     mapColumn(",
 				"          CID,",
 				"          BDATE,",
 				"          GEN",
-				"     )) ~> sink1"
+				"     ),",
+				"     format: 'table') ~> sink1"
 			]
 		}
 	}

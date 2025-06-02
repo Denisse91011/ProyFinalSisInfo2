@@ -1,23 +1,22 @@
 {
-	"name": "silver_clientes",
+	"name": "bronze_sql_clientes",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_dw_producto_cliente",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "SILVER"
+			"name": "BRONZE"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [
 			{
 				"name": "id",
-				"type": "int",
-				"precision": 10
+				"type": "varchar"
 			},
 			{
-				"name": "clikey",
+				"name": "key",
 				"type": "varchar"
 			},
 			{
@@ -38,7 +37,7 @@
 			}
 		],
 		"typeProperties": {
-			"schema": "SILVER",
+			"schema": "BRONZE",
 			"table": "CLIENTES"
 		}
 	}

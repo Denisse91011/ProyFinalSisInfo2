@@ -1,10 +1,6 @@
 {
 	"name": "gold_productos_cat_mant",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "sql_dw_producto_clientes",
-			"type": "LinkedServiceReference"
-		},
 		"folder": {
 			"name": "GOLD"
 		},

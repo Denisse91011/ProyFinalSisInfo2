@@ -2,7 +2,7 @@
 	"name": "detalle_ventas_csv",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "sa_producto_cliente",
+			"referenceName": "datalake_conn",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
@@ -14,7 +14,8 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "Detalle_ventas.csv",
-				"container": "productocliente"
+				"folderPath": "detalle_ventas",
+				"container": "bronze"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

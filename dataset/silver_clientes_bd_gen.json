@@ -1,5 +1,5 @@
 {
-	"name": "silver_clientes",
+	"name": "silver_clientes_bd_gen",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_dw_producto_cliente",
@@ -12,34 +12,21 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "id",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "clikey",
+				"name": "cid",
 				"type": "varchar"
 			},
 			{
-				"name": "firstname",
-				"type": "varchar"
+				"name": "bdate",
+				"type": "date"
 			},
 			{
-				"name": "lastname",
-				"type": "varchar"
-			},
-			{
-				"name": "marital_status",
-				"type": "varchar"
-			},
-			{
-				"name": "gender",
+				"name": "gen",
 				"type": "varchar"
 			}
 		],
 		"typeProperties": {
 			"schema": "SILVER",
-			"table": "CLIENTES"
+			"table": "CLIENTES_BD_GEN"
 		}
 	}
 }

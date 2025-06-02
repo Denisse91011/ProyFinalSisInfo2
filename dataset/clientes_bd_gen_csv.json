@@ -2,7 +2,7 @@
 	"name": "clientes_bd_gen_csv",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "sa_producto_cliente",
+			"referenceName": "datalake_conn",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
@@ -14,7 +14,8 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "Clientes_BD-GEN.csv",
-				"container": "productocliente"
+				"folderPath": "clientes_BD_GEN",
+				"container": "bronze"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

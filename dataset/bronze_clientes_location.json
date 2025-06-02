@@ -1,36 +1,28 @@
 {
-	"name": "silver_productos_cat_mant",
+	"name": "bronze_clientes_location",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_dw_producto_cliente",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "SILVER"
+			"name": "BRONZE"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "id",
+				"name": "idcountry",
 				"type": "varchar"
 			},
 			{
-				"name": "cat",
-				"type": "varchar"
-			},
-			{
-				"name": "subcat",
-				"type": "varchar"
-			},
-			{
-				"name": "maintenance",
+				"name": "country",
 				"type": "varchar"
 			}
 		],
 		"typeProperties": {
-			"schema": "SILVER",
-			"table": "PRODUCTOS_CAT_MANT"
+			"schema": "BRONZE",
+			"table": "CLIENTES_LOCATION"
 		}
 	}
 }

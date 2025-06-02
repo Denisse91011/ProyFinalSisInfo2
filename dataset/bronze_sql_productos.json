@@ -1,45 +1,40 @@
 {
-	"name": "silver_clientes",
+	"name": "bronze_sql_productos",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_dw_producto_cliente",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "SILVER"
+			"name": "BRONZE"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "id",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "clikey",
+				"name": "idproduct",
 				"type": "varchar"
 			},
 			{
-				"name": "firstname",
+				"name": "productkey",
 				"type": "varchar"
 			},
 			{
-				"name": "lastname",
+				"name": "productname",
 				"type": "varchar"
 			},
 			{
-				"name": "marital_status",
+				"name": "productcost",
 				"type": "varchar"
 			},
 			{
-				"name": "gender",
+				"name": "productline",
 				"type": "varchar"
 			}
 		],
 		"typeProperties": {
-			"schema": "SILVER",
-			"table": "CLIENTES"
+			"schema": "BRONZE",
+			"table": "PRODUCTOS"
 		}
 	}
 }

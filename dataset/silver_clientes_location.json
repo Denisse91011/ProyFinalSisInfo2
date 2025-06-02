@@ -2,7 +2,7 @@
 	"name": "silver_clientes_location",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "sql_dw_producto_clientes",
+			"referenceName": "sql_dw_producto_cliente",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
@@ -12,17 +12,17 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "CID",
+				"name": "idcountry",
 				"type": "varchar"
 			},
 			{
-				"name": "CNTRY",
+				"name": "country",
 				"type": "varchar"
 			}
 		],
 		"typeProperties": {
 			"schema": "SILVER",
-			"table": "CLIENTESLOCATION"
+			"table": "CLIENTES_LOCATION"
 		}
 	}
 }

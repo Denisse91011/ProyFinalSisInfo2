@@ -1,5 +1,5 @@
 {
-	"name": "bronze_df_clientes_location",
+	"name": "bronze_df_productos_cat_mantenance",
 	"properties": {
 		"folder": {
 			"name": "BRONZE"
@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "clientes_location_csv",
+						"referenceName": "productos_cat_mant_csv",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
@@ -18,7 +18,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "bronze_clientes_location",
+						"referenceName": "bronze_sql_productos_cat_mant",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -27,8 +27,10 @@
 			"transformations": [],
 			"scriptLines": [
 				"source(output(",
-				"          CID as string,",
-				"          CNTRY as string",
+				"          ID as string,",
+				"          CAT as string,",
+				"          SUBCAT as string,",
+				"          MAINTENANCE as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -36,8 +38,10 @@
 				"source1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          idcountry as string,",
-				"          country as string",
+				"          producto_id as string,",
+				"          categoria as string,",
+				"          subcategoria as string,",
+				"          mantenimiento as string",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -49,8 +53,10 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          idcountry = CID,",
-				"          country = CNTRY",
+				"          producto_id = ID,",
+				"          categoria = CAT,",
+				"          subcategoria = SUBCAT,",
+				"          mantenimiento = MAINTENANCE",
 				"     )) ~> sink1"
 			]
 		}

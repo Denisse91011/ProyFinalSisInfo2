@@ -8,10 +8,6 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"dataset": {
-						"referenceName": "bronze_sql_clientes",
-						"type": "DatasetReference"
-					},
 					"name": "source1"
 				}
 			],
@@ -39,10 +35,7 @@
 				"          cst_gndr as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'SELECT cst_id,\\n  cst_key,\\n  cst_firstname ,\\n  cst_lastname,\\n  cst_marital_status,\\n  cst_gndr FROM BRONZE.CLIENTES',",
-				"     format: 'query') ~> source1",
+				"     validateSchema: false) ~> source1",
 				"source1 cast(output(",
 				"          cst_id as integer",
 				"     ),",
@@ -50,12 +43,12 @@
 				"cast1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          cst_id as integer,",
-				"          cst_key as string,",
-				"          cst_firstname as string,",
-				"          cst_lastname as string,",
-				"          cst_marital_status as string,",
-				"          cst_gndr as string",
+				"          id as integer,",
+				"          clikey as string,",
+				"          firstname as string,",
+				"          lastname as string,",
+				"          marital_status as string,",
+				"          gender as string",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",

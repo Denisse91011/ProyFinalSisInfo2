@@ -2,7 +2,7 @@
 	"name": "silver_detalle_ventas",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "sql_dw_producto_clientes",
+			"referenceName": "sql_dw_producto_cliente",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
@@ -12,40 +12,40 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "sls_ord_num",
+				"name": "numorder",
 				"type": "varchar"
 			},
 			{
-				"name": "sls_prd_key",
+				"name": "productkey",
 				"type": "varchar"
 			},
 			{
-				"name": "sls_cust_id",
+				"name": "custid",
 				"type": "int",
 				"precision": 10
 			},
 			{
-				"name": "sls_order_dt",
+				"name": "orderdt",
 				"type": "int",
 				"precision": 10
 			},
 			{
-				"name": "sls_ship_dt",
+				"name": "shipdt",
 				"type": "int",
 				"precision": 10
 			},
 			{
-				"name": "sls_sales",
+				"name": "sales",
 				"type": "int",
 				"precision": 10
 			},
 			{
-				"name": "sls_quantity",
+				"name": "quantity",
 				"type": "int",
 				"precision": 10
 			},
 			{
-				"name": "sls_price",
+				"name": "price",
 				"type": "int",
 				"precision": 10
 			}

@@ -18,7 +18,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "bronze_sql_clientes_bd_gen",
+						"referenceName": "bronze_sql_cliente_bd_gen",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -37,9 +37,9 @@
 				"source1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
-				"          CID as string,",
-				"          BDATE as string,",
-				"          GEN as string",
+				"          cid as string,",
+				"          bdate as string,",
+				"          gen as string",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -51,9 +51,9 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
-				"          CID,",
-				"          BDATE,",
-				"          GEN",
+				"          cid = CID,",
+				"          bdate = BDATE,",
+				"          gen = GEN",
 				"     )) ~> sink1"
 			]
 		}

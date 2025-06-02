@@ -1,10 +1,6 @@
 {
 	"name": "gold_detalle_ventas",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "sql_dw_producto_clientes",
-			"type": "LinkedServiceReference"
-		},
 		"folder": {
 			"name": "GOLD"
 		},

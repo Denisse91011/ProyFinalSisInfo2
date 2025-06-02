@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "bronze_df_productos_cat_mant",
+						"referenceName": "bronze_df_productos_cat_mantenance",
 						"type": "DataFlowReference"
 					},
 					"compute": {
