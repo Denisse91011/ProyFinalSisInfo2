@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-ucb-sisinfo-8723543"
+		},
+		"datalake_conn_connectionString": {
+			"value": ""
+		},
+		"sa_producto_cliente_connectionString": {
+			"value": ""
+		},
+		"sql_dw_producto_cliente_password": {
+			"value": ""
+		},
+		"github_com_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com/"
+		},
+		"sql_dw_producto_cliente_properties_typeProperties_server": {
+			"value": "sql-ucb-sisinfo-8723543.database.windows.net"
+		},
+		"sql_dw_producto_cliente_properties_typeProperties_database": {
+			"value": "dw_producto_cliente"
+		},
+		"sql_dw_producto_cliente_properties_typeProperties_userName": {
+			"value": "adminValAdri"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
